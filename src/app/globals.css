@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-orange: #f26a1b;
+  --color-orange-600: #d95510;
+  --color-orange-50: #fff3ea;
+  --color-ink: #14110f;
+  --color-ink-soft: #2a2522;
+  --color-beige: #f6eee4;
+  --color-sand: #e9dccb;
+  --color-mute: #6f665e;
+  --font-display: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-jost), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-orange);
+  color: #fff;
+}
+
+@layer components {
+  .btn {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-7 py-3.5 text-[13px] font-medium uppercase tracking-[0.14em] transition duration-300 ease-out;
+  }
+  .btn-primary {
+    @apply bg-orange text-white shadow-[0_10px_30px_-10px_rgba(242,106,27,0.7)] hover:-translate-y-0.5 hover:bg-orange-600;
+  }
+  .btn-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    animation: shimmer 4.5s ease-in-out infinite;
+  }
+  .btn-dark {
+    @apply bg-ink text-white hover:-translate-y-0.5 hover:bg-ink-soft;
+  }
+  .btn-ghost {
+    @apply border border-current bg-transparent hover:bg-white hover:text-ink;
+  }
+  .btn-outline {
+    @apply border border-ink/20 bg-transparent text-ink hover:border-orange hover:text-orange;
+  }
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-[11px] font-medium uppercase tracking-[0.3em] text-orange;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 2rem;
+    height: 1px;
+    background: currentColor;
+  }
+  .h-display {
+    font-family: var(--font-display);
+    @apply font-medium leading-[1.04] tracking-tight;
+  }
+  .field {
+    @apply w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] outline-none transition placeholder:text-ink/35 focus:border-orange focus:ring-4 focus:ring-orange/10;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-medium uppercase tracking-[0.14em] text-mute;
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@keyframes shimmer {
+  0%,
+  55% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(120%);
+  }
+}
+@keyframes slowzoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes fadeup {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+@keyframes ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(242, 106, 27, 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgba(242, 106, 27, 0);
+  }
+}
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-24px) scale(0.96);
+  }
+}
+@keyframes progress {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
+
+.animate-slow-zoom {
+  animation: slowzoom 18s ease-out forwards;
+}
+.animate-fadeup {
+  animation: fadeup 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.animate-spin-slow {
+  animation: spin-slow 24s linear infinite;
+}
+.animate-floaty {
+  animation: floaty 6s ease-in-out infinite;
+}
+.animate-ring {
+  animation: ring 2.4s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
